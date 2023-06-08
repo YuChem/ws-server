@@ -1,18 +1,8 @@
 const supertest = require('supertest');
 const server = require('../src/server');
 
-const winston = require("winston");
-server.log = winston.createLogger({
-  level: "debug",
-  format: winston.format.simple(),
-  transports: [
-    new winston.transports.Console(),
-  ],
-});
-
-
 const requestWithSupertest = supertest(server);
-const aw_QUERY = "/data/?stationtype=AMBWeatherV4.2.9&PASSKEY=<MAC_ADDRESS>&dateutc=2021-03-19+20:20:12&tempinf=70.3&humidityin=29&baromrelin=29.900&baromabsin=24.756&tempf=62.8&battout=1&humidity=31&winddir=188&windspeedmph=1.1&windgustmph=3.4&maxdailygust=5.8&hourlyrainin=0.000&eventrainin=0.000&dailyrainin=0.000&weeklyrainin=0.000&monthlyrainin=0.000&totalrainin=0.000&solarradiation=622.94&uv=6&batt_co2=1";
+const aw_QUERY = "/data/report/stationtype=AMBWeatherPro_V5.1.1&PASSKEY=E8:DB:84:F2:9D:19&dateutc=2023-06-07+16:23:36&tempf=85.5&humidity=80&windspeedmph=2.24&windgustmph=2.24&maxdailygust=4.47&winddir=95&uv=0&solarradiation=67.38&hourlyrainin=0.000&eventrainin=0.000&dailyrainin=0.000&weeklyrainin=0.000&monthlyrainin=0.000&totalrainin=0.012&battout=1&tempinf=84.7&humidityin=79&baromrelin=30.002&baromabsin=29.828";
 // const MOCK_ROI = 'mock_roi';
 
 // jest.mock('../src/services/geocast', () => {

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css" />
+	<title>Download</title>
+</head>
+
+<body>
+	<h2>Download files</h2>
+	<table>
+		<tr>
+			<form action="/data/download" method="get">
+			<td>
+				<input type="hidden" name="days" value="7">
+				<label for="username">7d - last week</label>				
+			</td>
+			<td>
+				<button type="submit">download</button>				
+			</td>
+			</form>
+		</tr>
+		<tr>
+			<form action="/data/download" method="get">
+			<td>
+				<input type="hidden" name="days" value="30">
+				<label for="username">30d - last month</label>				
+			</td>
+			<td>
+				<button type="submit">download</button>				
+			</td>
+			</form>
+		</tr>
+		<tr>
+			<form action="/data/download" method="get">
+			<td>
+				<input type="hidden" name="days" value="90">
+				<label for="username">90d - last 3 months</label>				
+			</td>
+			<td>
+				<button type="submit">download</button>				
+			</td>
+			</form>
+		</tr>
+		<tr>
+			<form action="/data/download" method="get">
+			<td>
+				<input type="hidden" name="days" value="9999">
+				<label for="username">all - since inception</label>				
+			</td>
+			<td>
+				<button type="submit">download</button>				
+			</td>
+			</form>
+		</tr>	</table>
+</body>
+
+</html>
