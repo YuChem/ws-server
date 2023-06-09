@@ -21,7 +21,7 @@ app.get('/data/report/:data', (req, res) => {
   const fname = app.storage_folder + "/" + data.dateutc.split(" ")[0] + ".json"
 
   //drop line into a file named by date
-  fs.appendFile(fname, JSON.stringify(data),  (err) => {
+  fs.appendFile(fname, JSON.stringify(data) + "\n",  (err) => {
     if (err) {
       console.error(err);
     }
@@ -30,7 +30,7 @@ app.get('/data/report/:data', (req, res) => {
   res.status(200).send('OK');
 });
 
-app.get('/data/download', async (req, res) => {
+app.get('/data/download', (req, res) => {
   const days = req.query.days;
   console.log(`download request: ${days}d`);
 
@@ -39,21 +39,21 @@ app.get('/data/download', async (req, res) => {
   res.attachment(`${new Date().toISOString().slice(0,13)}.zip`);
   archive.pipe(res);
 
-  // add files to archive
-  const date = new Date();
-  for (let i = 0; i < days; i++) {
-    const fname = `${date.toISOString().slice(0,10)}.json`;
-    const fullFname = `${app.storage_folder}/${fname}`;
+  // list files to pack into zip file
+  let files = fs.readdirSync(app.storage_folder);
+  if (days > 0) {
+    const lastDate = new Date()
+    lastDate.setDate(lastDate.getDate() - days);
+    const fName = lastDate.toISOString().slice(0,10);
 
-    if (fs.existsSync(fullFname)) {
-      archive.append(fs.createReadStream(fullFname), { name: fname });
-      console.log(`archiving: ${fullFname}`);
-    } else {
-      console.log(`archiving: could not find file ${fullFname}`);
-    }
-    // move date 1 day back
-    date.setDate(date.getDate() - 1);
+    // only files 
+    files = files.filter(f => f.split(".")[0] > fName);
   }
+
+  files.forEach(fname => {
+    const fullFname = `${app.storage_folder}/${fname}`;
+    archive.append(fs.createReadStream(fullFname), { name: fname });
+  })
   
   archive.finalize();
 
